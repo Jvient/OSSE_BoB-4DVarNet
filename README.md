@@ -8,3 +8,4 @@ AE-4DVarnet
 GE-ADVarNet
 
 Data ZOI available at : https://drive.google.com/file/d/1bhecm0gODlwSUb3Ba7ayVIyMbnctLqux/view?usp=sharing
+All interpolation results are available with pred_* files. 
