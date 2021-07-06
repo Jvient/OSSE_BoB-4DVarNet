@@ -14,7 +14,7 @@ from random import randrange
 
 import os
 
-os.chdir('/home/vient/Thèse/Python/Script_Python/MAJ_AnDA0720/AnDA-master')
+os.chdir('*/AnDA-master')
 # analog data assimilation
 from AnDA_codes.AnDA_analog_forecasting import AnDA_analog_forecasting
 from AnDA_codes.AnDA_data_assimilation import AnDA_data_assimilation
