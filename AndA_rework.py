@@ -139,9 +139,3 @@ tast[np.where(tast>=np.nanmax(y_pred))]=np.nanmax(y_pred)
 if Save:
     np.save('AndA_pred',tast)
     print('Prediction saved')
-
-
-
-# RMSE=np.empty((len(RMSEtot),4))
-# for i in range (len(RMSEtot)):
-#     RMSE[i]=RMSEtot[i]
