@@ -73,9 +73,10 @@ def prepdata(xH,mask,N_Catalog=0):
     y_pred     = xD[len(mask_train):len(mask_train)+len(mask_pred)]
     return mask_train,mask_pred,x_train,y_pred
 
+noise = np.random.normal(0,0.15*np.nanvar(y_pred),(y_pred.shape))
 mask_train,mask_pred,x_train,y_pred = prepdata(dataH,mask)
 print('Starting DinEOF interpolation')
-pred,hist =DinEOF_iter(x_train,mask_pred,y_pred,OI,0.99,n_Iter = 12)
+pred,hist =DinEOF_iter(x_train,mask_pred,y_pred+noise,OI,0.99,n_Iter = 12)
 print('DinEOF interpolation ended with RMSE : '+str(np.sqrt(np.nanmean((pred - y_pred)**2))))
 
 if Save:
