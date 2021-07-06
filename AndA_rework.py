@@ -61,10 +61,11 @@ def prepdata(xH,mask,testsize,N_Catalog=0):
     return mask_train,mask_pred,x_train,y_pred
 
 mask_train,mask_pred,x_train,y_pred = prepdata(dataH,mask,100)
+noise = np.random.normal(0,0.15*np.nanvar(y_pred),(y_pred.shape))
 
 Truepts  = np.where(~np.isnan(x_train[0].reshape(-1)))[0]
 Trainsea = x_train.reshape(len(x_train),-1)[:,Truepts]
-Predsea  = y_pred.reshape(len(y_pred),-1)[:,Truepts]
+Predsea  =(y_pred+noise).reshape(len(y_pred),-1)[:,Truepts]
 masksea = mask_pred.reshape(len(mask_pred),-1)[:,Truepts]
 
 print('Size of train dataset :',Trainsea.shape[0],'---- Prediction on ',len(Predsea),' days')
@@ -134,58 +135,12 @@ tast=np.copy(y_pred.reshape(len(y_pred),-1))
 tast[:,Truepts]=ui
 tast[np.where(tast<=-4)]=-4
 tast[np.where(tast>=np.nanmax(y_pred))]=np.nanmax(y_pred)
-if flagPred :
-    print(np.sqrt(np.nanmean((y_pred[15:].flatten()-tast[15:].flatten())**2)))
-    if Save:
-        np.save(str('AndA_pred'+str(len(y_pred)-15)),tast.reshape(y_pred.shape))
-        print('Prediction saved')
-else:
-    print(np.sqrt(np.nanmean((y_pred.flatten()-tast.flatten())**2)))
-    if Save:
-        np.save('AndA_pred',tast)
-        print('Prediction saved')
+
+if Save:
+    np.save('AndA_pred',tast)
+    print('Prediction saved')
 
 
-
-'''Rui=[0.1,0.25,0.5,0.75,1,3]
-RNe=[100,250,500,750,1000]
-Rk=[100,250,500,750,1000]
-RMSEtot=dict()
-QQ=0
-
-for bite in range(len(Rui)):
-    for cul in range(len(RNe)):
-        for chier in range(len(Rk)):
-
-            class AF:
-                k = Rk[chier]; # number of analogs
-                neighborhood = global_analog_matrix # global analogs
-                catalog = catalog # catalog with analogs and successors
-                regression = 'local_linear' # chosen regression ('locally_constant', 'increment', 'local_linear')
-                sampling = 'gaussian' # chosen sampler ('gaussian', 'multinomial')
-
-            class DA:
-                method = 'AnEnKS' # chosen method ('AnEnKF', 'AnEnKS', 'AnPF')
-                N = RNe[cul] # number of members (AnEnKF/AnEnKS) or particles (AnPF)
-                xb = Cat[-1]
-                B = np.cov(Cat.T)
-                H = TransH.T
-                R = np.full((Predsea.shape[1],Predsea.shape[1]),Rui[bite])
-                @staticmethod
-                def m(x):
-                    return AnDA_analog_forecasting(x,AF)
-
-            # run the analog data assimilation
-            x_hat_analog_global = AnDA_data_assimilation(yo, DA)
-
-            car=pca.inverse_transform(x_hat_analog_global.values)
-            tast=np.copy(y_pred.reshape(100,-1))
-            tast[:,Truepts]=car
-            tast[np.where(tast<=-4)]=-4
-            tast[np.where(tast>=np.nanmax(y_pred))]=np.nanmax(y_pred)
-            RMSEtot[QQ]=[np.sqrt(np.nanmean((y_pred.flatten()-tast.flatten())**2)),RNe[cul],Rui[bite],Rk[chier]]
-            QQ=QQ+1
-            print(np.sqrt(np.nanmean((y_pred.flatten()-tast.flatten())**2)))'''
 
 # RMSE=np.empty((len(RMSEtot),4))
 # for i in range (len(RMSEtot)):
