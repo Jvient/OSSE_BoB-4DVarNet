@@ -1,5 +1,5 @@
 # OSSE_BoB-4DVarNet
-Containing all the interpolation codes used in the article: Data-driven Interpolation of sea Surface Suspended Sediment Concentrations derived from ocean colour remote sensing data 
+Containing all the interpolation codes used in the article: Data-driven Interpolation of sea Surface Suspended Sediment Concentrations derived from ocean colour remote sensing data (https://www.mdpi.com/2072-4292/13/17/3537)
 Each interpolating method are settong up to be run on notebook (Google Colab). 
 
 DinEOF
